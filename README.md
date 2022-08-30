@@ -1,17 +1,20 @@
-# NeMo_Test
+# Introducción a Nvidia NeMo
 
-## **Pruebas realizadas para llevar a cabo un demo de Nvidia NeMo**
+El presente repositorio incluye los tutoriales oficiales de Nvidia NeMo y un par de demos que simplifican la utilización de la herramienta. 
 
-Los files son los tutoriales individuales encontrados en la página de NeMo, en la sección TTS.
+## Tutoriales Nvidia
 
-El funcionamiento de cada script se detalla a continuación:
+*Los tutoriales han sido corregidos en lo necesario y están hechos para correr en Google Colab.*
 
-### **NeMo#1.- Introducción a la utilidad TTS.**
+1. Introducción a los distintos modelos disponibles de TTS; te permite comparar los resultados que los diferentes modelos ofrecen.
+2. Introducción a la modulación de pitch en la salida de audio del modelo, menciona las restricciones del feature.
+3. Introducción al modelo TacoTron2 y al entrenamiento del mismo. **PRESENTA FALLAS**
+4. Introducción al entrenamiento para el modelo FastPitch. **PRESENTA FALLAS**
 
- Permite seleccionar entre los genradores de audio y de espectrogramas, para generar un audio a partir de un input de audio. El audio será dicho en inglés.
+## Demos
 
-### **NeMo#2.- Control de Pitch**
+Los demos permiten correr un modelo FastPitch + HiFigan para reproducir un simple string input (**en inglés**) por parte del usuario.
 
-Importa un modelo TTS pre-entrenado y permite controlar el pitch de una frase,cambiando el tono de esta. Logra generar tonos de pregunta, exclamación y seriedad, así como la alteración de velocidad de habla.
+## En desarrollo
 
-## **NeMo#3**
+Entrenar a un modelo pre-entrenado para detectar y poder hablar en español. 
