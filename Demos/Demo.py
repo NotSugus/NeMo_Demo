@@ -1,7 +1,4 @@
-# apt-get install sox libsndfile1 ffmpeg
-#pip install wget unidecode
-# python -m pip install git+https://github.com/NVIDIA/NeMo.git@r1.11.0#egg=nemo_toolkit[all]
-# pip install wget unidecode pynini==2.1.4
+#Antes de correr el programa, se asume que ya se cumplen con todos los requisitos y dependencias (nemo, torch, etc.)
 
 import IPython.display as ipd
 import librosa
@@ -9,7 +6,6 @@ import librosa.display
 import numpy as np
 import torch
 from matplotlib import pyplot as plt
-%matplotlib inline
 
 # Reduce logging messages for this notebook
 from nemo.utils import logging
@@ -49,6 +45,6 @@ def display_pitch(audio, pitch, sr=22050, durs=None):
     ipd.display(ipd.Audio(audio, rate=sr))
     plt.show()
 
-input_string = "One"
+input_string = input('Ingresar string a reproducir [eng]: ')
 _, audio, *_ = str_to_audio(input_string, pace=1)
 ipd.display(ipd.Audio(audio, rate=sr))
