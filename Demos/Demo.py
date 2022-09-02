@@ -1,5 +1,5 @@
 #Antes de correr el programa, se asume que ya se cumplen con todos los requisitos y dependencias (nemo, torch, etc.)
-
+#Se importan las librerías necesarias para correr el programa.
 import IPython.display as ipd
 import librosa
 import librosa.display
@@ -7,15 +7,12 @@ import numpy as np
 import torch
 from matplotlib import pyplot as plt
 
-# Reduce logging messages for this notebook
-from nemo.utils import logging
-logging.setLevel(logging.ERROR)
-
+#importar modelos pre-entrenados
 from nemo.collections.tts.models import FastPitchModel
 from nemo.collections.tts.models import HifiGanModel
 from nemo.collections.tts.helpers.helpers import regulate_len
 
-# Load the models from NGC
+# Cargar modelos pre-entrenados desde NGC
 fastpitch = FastPitchModel.from_pretrained("tts_en_fastpitch").eval().cuda()
 hifigan = HifiGanModel.from_pretrained("tts_hifigan").eval().cuda()
 sr = 22050
@@ -28,23 +25,31 @@ def str_to_audio(inp, pace=1.0, durs=None, pitch=None):
         audio = hifigan.convert_spectrogram_to_audio(spec=spec).to('cpu').numpy()
     return spec, audio, durs_pred, pitch_pred
 
-# Define a helper function to plot spectrograms with pitch and display the audio
+# Se define una función que regresa el audio a reproducir.
 def display_pitch(audio, pitch, sr=22050, durs=None):
     fig, ax = plt.subplots(figsize=(12, 6))
     spec = np.abs(librosa.stft(audio[0], n_fft=1024))
-    # Check to see if pitch has been unnormalized
+    # Se checa si el tono se ha normalizado
     if torch.abs(torch.mean(pitch)) <= 1.0:
-        # Unnormalize the pitch with LJSpeech's mean and std
+        # Desnormaliza el tono de acuerdo a los estándares de LJSpeech
         pitch = pitch * 65.72037058703644 + 214.72202032404294
-    # Check to see if pitch has been expanded to the spec length yet
+    # Se ajusta el tono de acuerdo a la duración del string
     if len(pitch) != spec.shape[0] and durs is not None:
         pitch = regulate_len(durs, pitch.unsqueeze(-1))[0].squeeze(-1)
-    # Plot and display audio, spectrogram, and pitch
+    # Display del espectro generado y del audio
     ax.plot(pitch.cpu().numpy()[0], color='cyan', linewidth=1)
     librosa.display.specshow(np.log(spec+1e-12), y_axis='log')
     ipd.display(ipd.Audio(audio, rate=sr))
     plt.show()
 
+# Finalmente, ingresa el string que queremos de output
 input_string = input('Ingresar string a reproducir [eng]: ')
-_, audio, *_ = str_to_audio(input_string, pace=1)
-ipd.display(ipd.Audio(audio, rate=sr))
+val_choice = input("Quieres ajustar la velocidad de reproducción? [y/n]")
+if val_choice.lower() == 'y':
+    val_pace = input('Ingresa la velocidad a la que quieres reproducir el audio (entre 0.5 y 1.5')
+elif val_choice.lower() == 'n':
+    _, audio, *_ = str_to_audio(input_string, pace=1)
+    ipd.display(ipd.Audio(audio, rate=sr))
+else:
+    _, audio, *_ = str_to_audio(input_string, pace=1)
+    ipd.display(ipd.Audio(audio, rate=sr))
