@@ -19,8 +19,4 @@ Los demos permiten correr un modelo FastPitch + HiFigan para reproducir un simpl
 
 ### Modelo TTS en español
 
-* **Encontrar base de datos adecuada** para entrenamiento checar la [sección TTS de NeMo](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/stable/tts/intro.html) para ver requerimientos. El principal modelo pretendiente es FastPitch2, por lo que los requerimientos tienen detalles adicionales.
-* Indagar sobre el papel de **Riva+TAO** para realizar el **entrenamiento** del modelo Fastpitch.
-  * Importar modelo de Nemo -> Riva mediante una función del toolkit.
-* Conseguir correr localmente los programas realizados de TTS.
-  * Indagar sobre el uso de una **máquina virtual** (requerimientos de linux).
+Issue solucionado, se encontró modelo apto para utilizar. Se debe de considerar la posibilidad de mejorarlo. Se ha cambiado desarrollo a otro repo.
